@@ -1,7 +1,15 @@
+from time import sleep
 import speech_recognition as sr
-import playsound
+import playsound as p
 import window as w
 import make_audio as a
+import os
+
+def StartTest(dirname):
+   for audio in range(1,16):
+      file = dirname + "\\" + str(audio) + ".mp3"
+      p.playsound(file)
+      sleep(1)
 
 '''
 1. 일 경험 없음
@@ -16,5 +24,5 @@ import make_audio as a
 7. (총 2개) 국내여행, 해외여행
 '''
 if __name__ == '__main__':
-    a.MakeAudioFile()
-    #playsound.playsound("opic5_1.mp3")
+    #dirname = a.MakeAudioFile()
+    StartTest(os.getcwd() + "\\test_1")
