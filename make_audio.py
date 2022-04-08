@@ -1,4 +1,5 @@
 from gtts import gTTS
+from PyQt5.QtWidgets import QMessageBox
 import random
 import os
 
@@ -11,9 +12,13 @@ def MakeComboSet():
     f = open("combo.txt", 'r')
     lines = f.readlines()
     setcnt = len(lines)//3
-    set = random.sample(range(0, setcnt), 3)
-    for i in set:
-        text += str(lines[i])+str(lines[i+1])+str(lines[i+2])
+    added_topic = []
+    while len(added_topic) < 3:
+        set = random.randrange(0, setcnt)
+        l = lines[set*3].split("+")
+        if l[0] not in added_topic:
+            added_topic.append(l[0])
+            text += str(l[1])+str(lines[set*3+1])+str(lines[set*3+2])
     f.close()
     return text
 
