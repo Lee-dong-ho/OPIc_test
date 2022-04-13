@@ -1,10 +1,8 @@
 import os
-from matplotlib.pyplot import gray
 from playsound import playsound
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5 import QtCore
+from PyQt5.QtWidgets import QDialog, QMessageBox, QApplication, QDesktopWidget, QLabel, QTextBrowser, QPushButton
+from PyQt5.QtGui import QIcon, QPixmap, QFont
+from PyQt5.QtCore import QSize, QTimer, Qt
 from time import sleep
 
 class starttest(QDialog):
@@ -90,13 +88,13 @@ class starttest(QDialog):
 
     # Configuration
     self.setWindowTitle(self.dirname)
-    self.setWindowIcon(QIcon(''))
+    self.setWindowIcon(QIcon('res\\audio.png'))
     self.resize(700,500)
     self.center()
   
   def createImageField(self):
     AvaImg = QPixmap()
-    AvaImg.load("ava.png")
+    AvaImg.load("res\\ava.png")
     lb_picture = QLabel(self)
     lb_picture.setPixmap(AvaImg)
     lb_picture.move(self.x, self.y)
@@ -104,7 +102,7 @@ class starttest(QDialog):
     self.btnstart = QPushButton(self)
     self.btnstart.clicked.connect(self.btnstart_clicked)
     pixmap = QPixmap()
-    pixmap.load("start.png")
+    pixmap.load("res\\start.png")
     icon = QIcon()
     icon.addPixmap(pixmap)
     self.btnstart.setIcon(icon)
@@ -123,7 +121,7 @@ class starttest(QDialog):
     self.q = [QLabel(str(i), self) for i in range(1,16)]
     for i in range(15):
       self.q[i].setStyleSheet(self.Notsolved)
-      self.q[i].setAlignment(QtCore.Qt.AlignCenter)
+      self.q[i].setAlignment(Qt.AlignCenter)
       if i < 10: self.q[i].setGeometry(self.x + 250 + i*40, self.y, 30, 30)
       else: self.q[i].setGeometry(self.x + 250 + (i-10)*40, self.y + 40, 30, 30)
     self.q[0].setStyleSheet(self.Solved)
@@ -151,7 +149,7 @@ class starttest(QDialog):
     #btnhelp.setStyleSheet("border: transparent")
     btnhelp.clicked.connect(self.btnhelp_clicked)
     pixmap = QPixmap()
-    pixmap.load("help.png")
+    pixmap.load("res\\help.png")
     icon = QIcon()
     icon.addPixmap(pixmap)
     btnhelp.setIcon(icon)
