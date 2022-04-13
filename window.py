@@ -9,7 +9,17 @@ import os
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        if self.ErrorCheck(): self.initUI()
+        else: sys.exit()
+    
+    def ErrorCheck(self):
+        if os.path.isdir("res") == False:            
+            QMessageBox.about(self, "Error", "[Error] 'res' Folder Not Found...\nPlease make this folder")
+            return 0
+        if len(os.listdir("res")) < 7:
+            QMessageBox.about(self, "Error", "[Error] There are no enough files in 'res' folder.\nPlease check the files\n\t* png : audio ava help start\n\t* txt : combo roleplaying socialissue")
+            return 0
+        return 1
     
     def btnnt_clicked(self):
         level = self.cmb_level.currentText()

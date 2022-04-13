@@ -42,26 +42,10 @@ def MakeSocialIssue():
     f.close()
     return text
 
-def ErrorCheck():
-    try:
-        f = open("res\\combo.txt","r")
-        f.close()
-        f = open("res\\roleplaying.txt","r")
-        f.close()
-        f = open("res\\socialissue.txt","r")
-        f.close()
-        return 1
-    except FileNotFoundError:
-        msg = QMessageBox("[Error] You don't have required files.\nPlease make files : 'combo.txt' 'roleplaying.txt' socialissue.txt'")
-        msg.setWindowTitle("FileNotFoundError")
-        msg.exec_()
-        return 0
-
 def MakeAudioFile():
     # 2,3,4 / 5,6,7 / 8,9,10 :  Combo           3set
     # 11,12,13               :  Role Playing    1set
     # 14,15                  :  Social Issue    1set
-    if ErrorCheck() == 0: return
     filelist = os.listdir(".\\")
     filelist = [int(file[5:]) for file in filelist if file.startswith('test_')]
     filelist.sort()
