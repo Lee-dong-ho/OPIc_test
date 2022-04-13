@@ -1,11 +1,9 @@
 import sys
-from time import sleep
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5 import QtCore
-from make_audio import *
-from StartTest import *
+from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication, QDesktopWidget, QPushButton, QComboBox
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
+from make_audio import MakeAudioFile
+from StartTest import starttest
 import os
 
 class MyApp(QWidget):
@@ -18,10 +16,13 @@ class MyApp(QWidget):
         if level == "3-3": QMessageBox.about(self, "message", "I'm so sorry, but we don't have 3-3 level yet.\n I will make it ASAP.")
         elif level == "5-5":
             dirname = MakeAudioFile()
+            self.hide()
             msg = QMessageBox()
             msg.setWindowTitle("Making New Test Set")
+            msg.setWindowIcon(QIcon('res\\audio.png'))
             msg.setText("Success to make new set.\nNew Set : " + dirname)
             msg.exec()
+            self.show()
             self.cmb_list.addItem(dirname)
             self.cmb_list.setCurrentText(dirname)
         else: QMessageBox.about(self, "message", "Please select the level.\n  * combo box on the right")
@@ -42,10 +43,12 @@ class MyApp(QWidget):
         self.btnnt = QPushButton('Make New Test Set', self)
         self.btnnt.setGeometry(x, y, w, h)
         self.btnnt.clicked.connect(self.btnnt_clicked)
+        self.btnnt.setStyleSheet("background: lightgray")
 
         self.btnst = QPushButton('Start Test', self)
         self.btnst.setGeometry(x, y+h+10, w, h)
         self.btnst.clicked.connect(self.btnst_clicked)
+        self.btnst.setStyleSheet("background: lightgray")
 
         # Combo Box
         self.cmb_level = QComboBox(self)
@@ -53,18 +56,20 @@ class MyApp(QWidget):
         self.cmb_level.addItem("5-5")
         self.cmb_level.setGeometry(x+w+10, y, w//2, h)
         self.cmb_level.setCurrentIndex(self.cmb_level.count()-1)
+        self.cmb_level.setStyleSheet("background: white; border: 1px solid")
 
         self.cmb_list = QComboBox(self)
         folders = [file for file in os.listdir(".\\") if file.startswith('test_')]
         for folder in folders: self.cmb_list.addItem(folder)
         self.cmb_list.setGeometry(x+w+10, y+h+10, w//2, h)
         self.cmb_list.setCurrentIndex(self.cmb_list.count()-1)
+        self.cmb_list.setStyleSheet("background: white; border: 1px solid")
 
         # Window Setting
         self.setWindowTitle('OPIc Test Program')
-        self.setWindowIcon(QIcon('play_music_audio_18916.png'))
-        #self.setGeometry(300, 300, 300, 200)
-        self.resize(350,150)
+        self.setWindowIcon(QIcon('res\\audio.png'))
+        self.setStyleSheet("background: white")
+        self.resize(350,120)
         self.center()
         self.show()
     

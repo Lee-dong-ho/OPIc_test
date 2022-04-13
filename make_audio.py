@@ -9,7 +9,7 @@ def MakeVoiceFile(text, name):
 
 def MakeComboSet():
     text = ""
-    f = open("combo.txt", 'r')
+    f = open("res\\combo.txt", 'r')
     lines = f.readlines()
     setcnt = len(lines)//3
     added_topic = []
@@ -24,28 +24,44 @@ def MakeComboSet():
 
 def MakeRolePlaying():
     text = ""
-    f = open("roleplaying.txt", 'r')
+    f = open("res\\roleplaying.txt", 'r')
     lines = f.readlines()
     setcnt = len(lines)//3
     set = random.randrange(0, setcnt)
-    text += str(lines[set])+str(lines[set+1])+str(lines[set+2])
+    text += str(lines[set*3])+str(lines[set*3+1])+str(lines[set*3+2])
     f.close()
     return text
 
 def MakeSocialIssue():
     text = ""
-    f = open("socialissue.txt", 'r')
+    f = open("res\\socialissue.txt", 'r')
     lines = f.readlines()
     setcnt = len(lines)//2
     set = random.randrange(0, setcnt)
-    text += str(lines[set])+str(lines[set+1])
+    text += str(lines[set*2])+str(lines[set*2+1])
     f.close()
     return text
+
+def ErrorCheck():
+    try:
+        f = open("res\\combo.txt","r")
+        f.close()
+        f = open("res\\roleplaying.txt","r")
+        f.close()
+        f = open("res\\socialissue.txt","r")
+        f.close()
+        return 1
+    except FileNotFoundError:
+        msg = QMessageBox("[Error] You don't have required files.\nPlease make files : 'combo.txt' 'roleplaying.txt' socialissue.txt'")
+        msg.setWindowTitle("FileNotFoundError")
+        msg.exec_()
+        return 0
 
 def MakeAudioFile():
     # 2,3,4 / 5,6,7 / 8,9,10 :  Combo           3set
     # 11,12,13               :  Role Playing    1set
     # 14,15                  :  Social Issue    1set
+    if ErrorCheck() == 0: return
     filelist = os.listdir(".\\")
     filelist = [int(file[5:]) for file in filelist if file.startswith('test_')]
     filelist.sort()
