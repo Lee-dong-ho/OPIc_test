@@ -5,7 +5,7 @@ import os
 
 def MakeVoiceFile(text, name): 
     tts = gTTS(text=text, lang='en')
-    tts.save(name + '.mp3')
+    tts.save(name)
 
 def MakeComboSet():
     text = ""
@@ -58,7 +58,10 @@ def MakeAudioFile():
     text += MakeRolePlaying()
     text += MakeSocialIssue()
     texts = text.split('\n')
-    for i in range(15): MakeVoiceFile(texts[i], dirname + "\\" + str(i+1))
+    for i in range(15): MakeVoiceFile(texts[i], f"{dirname}\\{i+1}.mp3")
+    f = open(f"{dirname}\\Questions.txt","w")
+    f.write(text)
+    f.close()
     return dirname
 
 if __name__ == '__main__':
